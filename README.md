@@ -12,22 +12,22 @@ UPS status data stream,
 
 ### UPS status data stream :
 
-    - There should be a space character between every field for data separation. The meaning of each field is list as followed:
-        - a. Start byte : `(`
-        - b.I/P voltage : `MMM.M`
-        - M is and integer number ranging from 0 to 9. The unit is Volt.
-        - c.I/P fault voltage : NNN.N
-        - N is and integer number ranging from 0 to 9.The unit is Volt.
-        - d.O/P voltage : `PPP.P`
-        - P is an integer number ranging form 0 to 9.The unit is Volt.
-        - e.O/P current : `QQQ`
-        - QQQ is a percent of maximum current, not an absolute value.
-        - f.I/P frequency : `RR.R`
-        - R is an integer number ranging from 0 to 9.The unit is HZ.
-        - g.Battery voltage : `SS.S` or `S.SS`
-        - S is an integer number ranging from 0 to 9.
-        - h.Temperature : `TT.T`
-        - T is an integer number ranging form 0 to 9. The unit is degree of centigrade.
+- There should be a space character between every field for data separation. The meaning of each field is list as followed:
+  - a. Start byte : `(`
+  - b.I/P voltage : `MMM.M`
+  - M is and integer number ranging from 0 to 9. The unit is Volt.
+  - c.I/P fault voltage : NNN.N
+  - N is and integer number ranging from 0 to 9.The unit is Volt.
+  - d.O/P voltage : `PPP.P`
+  - P is an integer number ranging form 0 to 9.The unit is Volt.
+  - e.O/P current : `QQQ`
+  - QQQ is a percent of maximum current, not an absolute value.
+  - f.I/P frequency : `RR.R`
+  - R is an integer number ranging from 0 to 9.The unit is HZ.
+  - g.Battery voltage : `SS.S` or `S.SS`
+  - S is an integer number ranging from 0 to 9.
+  - h.Temperature : `TT.T`
+  - T is an integer number ranging form 0 to 9. The unit is degree of centigrade.
 
 ### ** For OFF LINE UPS**
 Its purpose is to identify a short duration voltage glitch
