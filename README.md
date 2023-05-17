@@ -11,6 +11,7 @@ UPS status data stream,
 `(MMM.M NNN.N PPP.P QQQ RR.R S.SS TT.T b7b6b5b4b3b2b1b0<cr>`
 
 ### UPS status data stream :
+
     - There should be a space character between every field for data separation. The meaning of each field is list as followed:
         - a. Start byte : `(`
         - b.I/P voltage : `MMM.M`
