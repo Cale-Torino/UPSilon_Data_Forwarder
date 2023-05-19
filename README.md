@@ -1,6 +1,6 @@
 # UPSilon Data Forwarder
 
-[<img src="img/heading.jpg" width="500"/>](img/heading.jpg)
+[<img src="img/2.jpg" width="500"/>](img/2.jpg)
 
 A C# application which forwards the strings and alerts from a single phase generic UPS using UPSilon 2000 software.
 
@@ -30,6 +30,8 @@ UPS status data stream `(MMM.M NNN.N PPP.P QQQ RR.R S.SS TT.T b7b6b5b4b3b2b1b0<c
   - S is an integer number ranging from `0 to 9`.
   - h.Temperature : `TT.T`
   - T is an integer number ranging form `0 to 9`. The unit is degree of centigrade.
+
+[<img src="img/2.jpg" width="500"/>](img/2.jpg)
 
 ### ** For OFF LINE UPS**
 Its purpose is to identify a short duration voltage glitch
