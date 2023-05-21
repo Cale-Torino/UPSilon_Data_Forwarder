@@ -2,7 +2,10 @@
 
 [<img src="img/6.jpg" width="500"/>](img/6.jpg)
 
-[<img src="img/2.jpg" width="500"/>](img/2.jpg)
+
+Choose SMS to grab data from the port it's sent to
+
+[<img src="img/7.jpg" width="500"/>](img/7.jpg)
 
 A C# application which forwards the strings and alerts from a single phase generic UPS using UPSilon 2000 software.
 
