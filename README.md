@@ -69,8 +69,6 @@ the form SS.S .
 UPS type in UPS status will determine which reading was
 obtained.
 
-
-
 ### i.UPS Status : <U>
 <U> is one byte of binary information such as
 <b7b6b5b4b3b2b1b0>.
