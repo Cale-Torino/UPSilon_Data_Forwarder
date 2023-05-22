@@ -2,7 +2,6 @@
 
 [<img src="img/6.jpg" width="500"/>](img/6.jpg)
 
-
 Choose SMS to grab data from the port it's sent to
 
 [<img src="img/7.jpg" width="500"/>](img/7.jpg)
