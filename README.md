@@ -1,5 +1,7 @@
 # UPSilon Data Forwarder
 
+Check out my short article [here](https://tutorials.techrad.co.za/2023/05/17/upsilon-remote-monitor "My tutorials site").
+
 [<img src="img/6.jpg" width="500"/>](img/6.jpg)
 
 Choose SMS to grab data from the port it's sent to
