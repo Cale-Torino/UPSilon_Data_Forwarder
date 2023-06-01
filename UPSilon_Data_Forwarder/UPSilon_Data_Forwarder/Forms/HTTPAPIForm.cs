@@ -23,12 +23,14 @@ namespace UPSilon_Data_Forwarder
             if (HttpServer.listener.IsListening)
             {
                 MessageBox.Show("HttpListener Already Listining", "HttpListener", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoggerClass.WriteLine(" *** HttpListener Already Listining [HTTPAPIForm] ***");
             }
             else
             {
                 if (string.IsNullOrWhiteSpace(Properties.Settings.Default.Url))
                 {
                     MessageBox.Show("Please Fill In Your Url Endpoint", "No Url Endpoint", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoggerClass.WriteLine(" *** Please Fill In Your Url Endpoint [HTTPAPIForm] ***");
                 }
                 else
                 {
@@ -37,6 +39,7 @@ namespace UPSilon_Data_Forwarder
                     HttpServer.listener.Prefixes.Add(Url_textBox.Text);
                     HttpServer.listener.Start();
                     LogsTextBox.AppendText($"Listening for connections on {Url_textBox.Text}{Environment.NewLine}");
+                    LoggerClass.WriteLine($" *** Listening for connections on {Url_textBox.Text} [HTTPAPIForm] ***");
 
                     // Handle requests
                     await HttpServer.HandleIncomingConnections();
@@ -61,6 +64,7 @@ namespace UPSilon_Data_Forwarder
                     if (string.IsNullOrWhiteSpace(Properties.Settings.Default.Url))
                     {
                         MessageBox.Show("Please Fill In Your Url Endpoint", "No Url Endpoint", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoggerClass.WriteLine(" *** Please Fill In Your Url Endpoint [HTTPAPIForm] ***");
                         return;
                     }
                     else
@@ -86,6 +90,7 @@ namespace UPSilon_Data_Forwarder
                         else
                         {
                             MessageBox.Show("Not Well Formed Uri String", "Could not test HTTP API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            LoggerClass.WriteLine(" *** Not Well Formed Uri String [HTTPAPIForm] ***");
                             return;
                         }
                     }
@@ -120,6 +125,7 @@ namespace UPSilon_Data_Forwarder
                 if (string.IsNullOrWhiteSpace(Url_textBox.Text))
                 {
                     MessageBox.Show("Please Fill In The Textbox/Textboxes", "Null Or WhiteSpace Textbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoggerClass.WriteLine(" *** Please Fill In The Textbox/Textboxes [HTTPAPIForm] ***");
                 }
                 else
                 {
@@ -128,10 +134,12 @@ namespace UPSilon_Data_Forwarder
                         Properties.Settings.Default.Url = EncryptionClass.EncryptString(EncryptionClass.ToSecureString(Url_textBox.Text));
                         Properties.Settings.Default.Save();
                         MessageBox.Show($"Settings Saved {Environment.NewLine}Url : {Url_textBox.Text}", "Settings Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoggerClass.WriteLine($" *** Settings Saved {Environment.NewLine}Url : {Url_textBox.Text} [HTTPAPIForm] ***");
                     }
                     else
                     {
                         MessageBox.Show("Not Well Formed Uri String", "Could not test HTTP API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        LoggerClass.WriteLine($" *** Not Well Formed Uri String [HTTPAPIForm] ***");
                         return;
                     }
                 }
@@ -140,7 +148,7 @@ namespace UPSilon_Data_Forwarder
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Save Settings Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                LoggerClass.WriteLine($" *** Error:{ex.Message} [TelegramAPIForm] ***");
+                LoggerClass.WriteLine($" *** Error:{ex.Message} [HTTPAPIForm] ***");
                 return;
             }
         }
@@ -154,6 +162,7 @@ namespace UPSilon_Data_Forwarder
             if (string.IsNullOrWhiteSpace(Url_textBox.Text))
             {
                 MessageBox.Show("Please Fill In The Textbox/Textboxes Before Closing", "Null Or WhiteSpace Textbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoggerClass.WriteLine($" *** Please Fill In The Textbox/Textboxes Before Closing [HTTPAPIForm] ***");
                 e.Cancel = true;
             }
         }

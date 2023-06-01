@@ -68,12 +68,14 @@ namespace UPSilon_Data_Forwarder
             if (HttpServer.listener.IsListening)
             {
                 MessageBox.Show("HttpListener Already Listining", "HttpListener", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoggerClass.WriteLine($" *** HttpListener Already Listining [MainForm] ***");
             }
             else
             {
                 if (string.IsNullOrWhiteSpace(Properties.Settings.Default.Url))
                 {
                     MessageBox.Show("Please Fill In Your Url Endpoint", "No Url Endpoint", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoggerClass.WriteLine($" *** Please Fill In Your Url Endpoint [MainForm] ***");
                 }
                 else
                 {
@@ -83,6 +85,7 @@ namespace UPSilon_Data_Forwarder
                     HttpServer.listener.Prefixes.Add(url);
                     HttpServer.listener.Start();
                     LogsTextBox.AppendText($"Listening for connections on {url}{Environment.NewLine}");
+                    LoggerClass.WriteLine($" *** Listening for connections on {url} [MainForm] ***");
 
                     // Handle requests
                     await HttpServer.HandleIncomingConnections();
@@ -100,10 +103,12 @@ namespace UPSilon_Data_Forwarder
             {
                 //MessageBox.Show("Client Is Busy");
                 LogsTextBox.AppendText($"[{DateTime.Now}] : Client Is Busy\n");
+                LoggerClass.WriteLine($" *** Client Is Busy [MainForm] ***");
             }
             else
             {
                 LogsTextBox.AppendText($"[{DateTime.Now}] : Client Connecting...\n");
+                LoggerClass.WriteLine($" *** Client Connecting... [MainForm] ***");
                 ClientWorker.RunWorkerAsync();
             }
         }
@@ -115,11 +120,13 @@ namespace UPSilon_Data_Forwarder
                 if (VarClass.ListenerSMS.Server.IsBound)
                 {
                     MessageBox.Show("Server Already Listning");
+                    LoggerClass.WriteLine($" *** Server Already Listning [MainForm] ***");
                     LogsTextBox.AppendText($"[{DateTime.Now}] : Server Already Listning\n");
                 }
                 else
                 {
                     LogsTextBox.AppendText($"[{DateTime.Now}] : 8652 Start Listning...\n");
+                    LoggerClass.WriteLine($" *** 8652 Start Listning... [MainForm] ***");
                     VarClass.Listen = true;
                     //VarClass.ListenerSMS = new(new IPEndPoint(IPAddress.Any, 8652));
                     VarClass.ListenerSMS = new(IPAddress.Parse("127.0.0.1"), 8652);
@@ -130,6 +137,7 @@ namespace UPSilon_Data_Forwarder
             catch (Exception ex)
             {
                 LogsTextBox.AppendText($"Error: ({ex.Message}\n");
+                LoggerClass.WriteLine($" *** Error: {ex.Message} [MainForm] ***");
                 VarClass.ListenerSMS.Stop();
                 return;
             }
@@ -142,6 +150,7 @@ namespace UPSilon_Data_Forwarder
                 if (VarClass.ListenerSMS.Server.IsBound)
                 {
                     LogsTextBox.AppendText($"[{DateTime.Now}] : Stop Listning!\n");
+                    LoggerClass.WriteLine($" *** Stop Listning! [MainForm] ***");
                     VarClass.Listen = false;
                     VarClass.ListenerSMS.Stop();
                     //VarClass.ClientUPS.Close();
@@ -152,11 +161,13 @@ namespace UPSilon_Data_Forwarder
                 else
                 {
                     MessageBox.Show("Server Already Stopped");
+                    LoggerClass.WriteLine($" *** Server Already Stopped [MainForm] ***");
                     LogsTextBox.AppendText($"[{DateTime.Now}] : Server Already Stopped\n");
                 }
             }
             catch (Exception ex)
             {
+                LoggerClass.WriteLine($" *** Error: {ex.Message} [MainForm] ***");
                 LogsTextBox.AppendText($"Error: ({ex.Message}\n");
                 return;
             }
@@ -192,7 +203,7 @@ namespace UPSilon_Data_Forwarder
             }
         }
 
-        private async void SendToTelegram(string data)
+        private async void SendToTelegram()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -200,7 +211,7 @@ namespace UPSilon_Data_Forwarder
                 //client.DefaultRequestHeaders.Add("Authorization", "Bearer token");
                 try
                 {
-                    using (HttpResponseMessage response = await client.GetAsync(new Uri($"https://api.telegram.org/bot{Properties.Settings.Default.Token}/sendMessage?chat_id=-{Properties.Settings.Default.Chat_ID}&parse_mode=HTML&text=%F0%9F%9A%A8+<b>Alert</b>%0A<i>+IQ-Blue</i><u>+getMessage</u>%0AMessage+details+go+here")))
+                    using (HttpResponseMessage response = await client.GetAsync(new Uri($"https://api.telegram.org/bot{Properties.Settings.Default.Token}/sendMessage?chat_id=-{Properties.Settings.Default.Chat_ID}&text={VarClass.JsonData}")))
                     {
                         using (HttpContent content = response.Content)
                         {
@@ -214,8 +225,8 @@ namespace UPSilon_Data_Forwarder
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Could not test Telegram API", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    LoggerClass.WriteLine(" *** Error:" + ex.Message + " [TelegramAPIForm] ***");
+                    MessageBox.Show(ex.Message, "Could not send via Telegram API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    LoggerClass.WriteLine(" *** Error:" + ex.Message + " [MainForm] ***");
                     return;
                 }
             }
@@ -239,12 +250,12 @@ namespace UPSilon_Data_Forwarder
         {
             SerializeClass tj = new();
             string result = JsonSerializer.Serialize(tj.Serialized(InVoltage, FaultVoltage, OutputVoltage, Current, Frequency, BatteryVoltage, Temperature, UPSBinary));
-            BeginInvoke(new MethodInvoker(() => LogsTextBox.AppendText($"[{DateTime.Now}] : {result}{Environment.NewLine}")));
+            //BeginInvoke(new MethodInvoker(() => LogsTextBox.AppendText($"[{DateTime.Now}] : {result}{Environment.NewLine}")));
             VarClass.JsonData = result;
             if (Properties.Settings.Default.Telegram_Checkbox)
             {
                 //send to telegram
-                SendToTelegram(result);
+                SendToTelegram();
             }
             LoggerClass.WriteLine($"{result}{Environment.NewLine}");
             //BeginInvoke(new MethodInvoker(() => LogsTextBox.AppendText($"[{DateTime.Now}] : ({text.Length} bytes) : {text}{Environment.NewLine}")));
@@ -275,7 +286,7 @@ namespace UPSilon_Data_Forwarder
                             {
                                 string r = rr[^47..];
                                 //LoggerClass.WriteLine($"{r}{Environment.NewLine}");
-                                //BeginInvoke(new MethodInvoker(() => LogsTextBox.AppendText($"[{DateTime.Now}] : ({r.Length} bytes) : {r}{Environment.NewLine}")));
+                                BeginInvoke(new MethodInvoker(() => LogsTextBox.AppendText($"[{DateTime.Now}] : {r}{Environment.NewLine}")));
                                 string[] s = r.Split(' ');
                                 JsonForm(float.Parse(s[0]), float.Parse(s[1]), float.Parse(s[2]), int.Parse(s[3]), float.Parse(s[4]), float.Parse(s[5]), s[6], s[7].TrimEnd('\r', '\n'));
                                 stream.Flush();
@@ -283,6 +294,7 @@ namespace UPSilon_Data_Forwarder
                         }
                         catch (Exception ex)
                         {
+                            LoggerClass.WriteLine($" *** Error: StreamReadException: {ex.Message} [MainForm] ***");
                             BeginInvoke(new MethodInvoker(() => LogsTextBox.AppendText($"[{DateTime.Now}] : StreamReadException: {ex.Message}\n")));
                             return;
                         }
@@ -293,6 +305,7 @@ namespace UPSilon_Data_Forwarder
                     }
                     else
                     {
+                        LoggerClass.WriteLine(" *** Error: StreamReadException: Socket Not Bound [MainForm] ***");
                         BeginInvoke(new MethodInvoker(() => LogsTextBox.AppendText($"[{DateTime.Now}] : StreamReadException: Socket Not Bound\n")));
                     }
                 }
@@ -302,10 +315,12 @@ namespace UPSilon_Data_Forwarder
             }
             catch (ArgumentNullException ex)
             {
+                LoggerClass.WriteLine($" *** Error: ArgumentNullException: {ex.Message} [MainForm] ***");
                 BeginInvoke(new MethodInvoker(() => LogsTextBox.AppendText($"[{DateTime.Now}] : ArgumentNullException: {ex.Message}\n")));
             }
             catch (SocketException ex)
             {
+                LoggerClass.WriteLine($" *** Error: SocketException: {ex.Message} [MainForm] ***");
                 BeginInvoke(new MethodInvoker(() => LogsTextBox.AppendText($"[{DateTime.Now}] : SocketException: {ex.Message}\n")));
             }
         }

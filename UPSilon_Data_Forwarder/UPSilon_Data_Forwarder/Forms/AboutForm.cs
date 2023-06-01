@@ -14,6 +14,7 @@ namespace UPSilon_Data_Forwarder
         {
             linkLabel.ForeColor = Color.DodgerBlue;
             Versionlabel.Text = $"Version: {Application.ProductVersion}";
+            LoggerClass.WriteLine($" *** Version: {Application.ProductVersion} [AboutForm]  *** ");
         }
 
         private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

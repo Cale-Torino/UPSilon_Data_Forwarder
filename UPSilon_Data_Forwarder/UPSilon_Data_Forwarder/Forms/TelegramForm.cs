@@ -68,6 +68,7 @@ namespace UPSilon_Data_Forwarder
                 if (string.IsNullOrWhiteSpace(Chatid_textBox.Text) || string.IsNullOrWhiteSpace(Token_textBox.Text))
                 {
                     MessageBox.Show("Please Fill In The Textbox/Textboxes", "Null Or WhiteSpace Textbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoggerClass.WriteLine(" *** Please Fill In The Textbox/Textboxes [TelegramAPIForm] ***");
                 }
                 else
                 {
@@ -75,6 +76,7 @@ namespace UPSilon_Data_Forwarder
                     Properties.Settings.Default.Token = EncryptionClass.EncryptString(EncryptionClass.ToSecureString(Token_textBox.Text));
                     Properties.Settings.Default.Save();
                     MessageBox.Show($"Settings Saved {Environment.NewLine}ChatID : {Chatid_textBox.Text}{Environment.NewLine}Token : {Token_textBox.Text}", "Settings Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoggerClass.WriteLine($" *** Settings Saved {Environment.NewLine}ChatID : {Chatid_textBox.Text}{Environment.NewLine}Token : {Token_textBox.Text} [TelegramAPIForm] ***");
                 }
 
             }
@@ -95,6 +97,7 @@ namespace UPSilon_Data_Forwarder
             if (string.IsNullOrWhiteSpace(Chatid_textBox.Text) || string.IsNullOrWhiteSpace(Token_textBox.Text))
             {
                 MessageBox.Show("Please Fill In The Textbox/Textboxes Before Closing", "Null Or WhiteSpace Textbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoggerClass.WriteLine($" *** Please Fill In The Textbox/Textboxes Before Closing [TelegramAPIForm] ***");
                 e.Cancel = true;
             }
         }

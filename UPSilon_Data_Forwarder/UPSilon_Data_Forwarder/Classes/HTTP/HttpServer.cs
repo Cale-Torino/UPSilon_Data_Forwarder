@@ -7,7 +7,7 @@ namespace UPSilon_Data_Forwarder.Classes.HTTP
     internal class HttpServer
     {
         public static HttpListener listener = new();
-        public static string url = "http://localhost:8000/";
+        public static string url = Properties.Settings.Default.Url;
         public static string JsonData = string.Empty;
         public static int requestCount = 0;
         public static string pageData = "{0}";
