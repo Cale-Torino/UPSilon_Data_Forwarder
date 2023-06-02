@@ -87,3 +87,11 @@ Where bn is a ASCII character ‘0’ or ‘1’.
 |0|1 : Beeper On|
 
 ---
+
+[<img src="img/httpapi.jpg" width="500"/>](img/httpapi.jpg)
+
+[<img src="img/telegramapi.jpg" width="500"/>](img/telegramapi.jpg)
+
+[<img src="img/json.jpg" width="500"/>](img/json.jpg)
+
+
