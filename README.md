@@ -88,6 +88,8 @@ Where bn is a ASCII character ‘0’ or ‘1’.
 
 ---
 
+[<img src="img/usb_chip_EM78M612ACPJ.JPG" width="500"/>](img/usb_chip_EM78M612ACPJ.JPG)
+
 [<img src="img/httpapi.jpg" width="500"/>](img/httpapi.jpg)
 
 [<img src="img/telegramapi.jpg" width="500"/>](img/telegramapi.jpg)
